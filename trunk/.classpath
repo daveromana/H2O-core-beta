@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="buildSrc/src/main/java"/>
+	<classpathentry kind="src" path="h2o-algos/src/jmh/java"/>
+	<classpathentry kind="src" path="h2o-algos/src/main/java"/>
+	<classpathentry kind="src" path="h2o-algos/src/test/java"/>
+	<classpathentry kind="src" path="h2o-app/src/main/java"/>
+	<classpathentry kind="src" path="h2o-automl/src/main/java"/>
+	<classpathentry kind="src" path="h2o-automl/src/test/java"/>
+	<classpathentry kind="src" path="h2o-bindings/src/main/java"/>
+	<classpathentry kind="src" path="h2o-bindings/src/test/java"/>
+	<classpathentry kind="src" path="h2o-core/src/jmh/java"/>
+	<classpathentry excluding="water/rapids/ast/prims/mungers/" kind="src" path="h2o-core/src/main/java"/>
+	<classpathentry kind="src" path="h2o-core/src/main/java/water/rapids/ast/prims/mungers"/>
+	<classpathentry kind="src" path="h2o-core/src/test/java"/>
+	<classpathentry kind="src" path="h2o-docs/src/api/data-science-example-1"/>
+	<classpathentry kind="src" path="h2o-extensions/krbstandalone/src/main/java"/>
+	<classpathentry kind="src" path="h2o-extensions/xgboost/src/main/java"/>
+	<classpathentry kind="src" path="h2o-extensions/xgboost/src/test/java"/>
+	<classpathentry kind="src" path="h2o-genmodel-extensions/xgboost/src/main/java"/>
+	<classpathentry kind="src" path="h2o-genmodel/src/main/java"/>
+	<classpathentry kind="src" path="h2o-genmodel/src/test/java"/>
+	<classpathentry kind="src" path="h2o-grpc/src/main/java"/>
+	<classpathentry kind="src" path="h2o-hadoop/h2o-mapreduce-generic/src/main/java"/>
+	<classpathentry kind="src" path="h2o-hadoop/h2o-yarn-generic/src/main/java"/>
+	<classpathentry kind="src" path="h2o-jaas-pam/src/main/java"/>
+	<classpathentry kind="src" path="h2o-parsers/h2o-avro-parser/src/main/java"/>
+	<classpathentry kind="src" path="h2o-parsers/h2o-avro-parser/src/test/java"/>
+	<classpathentry kind="src" path="h2o-parsers/h2o-orc-parser/src/main/java"/>
+	<classpathentry kind="src" path="h2o-parsers/h2o-orc-parser/src/test/java"/>
+	<classpathentry kind="src" path="h2o-parsers/h2o-parquet-parser/src/main/java"/>
+	<classpathentry kind="src" path="h2o-parsers/h2o-parquet-parser/src/test/java"/>
+	<classpathentry kind="src" path="h2o-persist-hdfs/src/main/java"/>
+	<classpathentry kind="src" path="h2o-persist-s3/src/main/java"/>
+	<classpathentry kind="src" path="h2o-persist-s3/src/test/java"/>
+	<classpathentry kind="src" path="h2o-samples/src"/>
+	<classpathentry kind="src" path="h2o-test-accuracy/src/test/java"/>
+	<classpathentry kind="lib" path="gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="h2o-genmodel-extensions/xgboost/lib/xgboost4j-0.7.jar"/>
+	<classpathentry kind="lib" path="h2o-genmodel-extensions/xgboost/lib/xgboost4j-native-linux_gpu-0.7.jar"/>
+	<classpathentry kind="lib" path="h2o-genmodel-extensions/xgboost/lib/xgboost4j-native-linux_minimum-0.7.jar"/>
+	<classpathentry kind="lib" path="h2o-genmodel-extensions/xgboost/lib/xgboost4j-native-osx_minimum-0.7.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
