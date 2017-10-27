@@ -67,7 +67,9 @@ public abstract class ParseTime {
     final byte[] buf = str.getBuffer();
     int i=str.getOffset();
     final int end = i+str.length();
-    while( i < end && buf[i] == ' ' ) i++;
+    while( i < end && buf[i] == ' ' ){ 
+    	i++;
+    }
     if   ( i < end && buf[i] == '"' ) i++;
     if( (end-i) < 6 ) return Long.MIN_VALUE;
     int yyyy=0, MM=0, dd=0;
@@ -93,7 +95,10 @@ public abstract class ParseTime {
       dd=1;                              // yyyy-MM; no day
     }
     if( dash ) {                // yyyy-MM[-dd]
-      while( i < end && buf[i] == ' ' ) i++; // optional seperator or trailing blanks
+      while( i < end && buf[i] == ' ' ){ 
+    	  i++; // optional seperator or trailing blanks
+      	}
+      }
       if( i==end )
         return new DateTime(yyyy,MM,dd,0,0,0, getTimezone()).getMillis();
     } else {                    // yyyyMMdd-HH:mm:ss.SSS; dash AND time is now required
@@ -110,7 +115,9 @@ public abstract class ParseTime {
     final byte[] buf = str.getBuffer();
     int i=str.getOffset();
     final int end = i+str.length();
-    while( i < end && buf[i] == ' ' ) i++;
+    while( i < end && buf[i] == ' ' ){ 
+    		i++;
+    	}
     if   ( i < end && buf[i] == '"' ) i++;
     if( (end-i) < 5 ) return Long.MIN_VALUE;
     int yyyy=0, MM=0, dd=0;
@@ -141,7 +148,9 @@ public abstract class ParseTime {
     } else { //POSIX 2004 & 2008 says 69-99 -> 1900s, 00-68 -> 2000s
       yyyy += (yyyy >= 69) ? 1900 : 2000;
     }
-    while( i<end && buf[i] == ' ' ) i++;
+    while( i<end && buf[i] == ' ' ){ 
+    		i++;
+    	}
     if( i<end && buf[i] == '"' ) i++;
     if( i==end )
       return new DateTime(yyyy,MM,dd,0,0,0, getTimezone()).getMillis();
@@ -159,7 +168,9 @@ public abstract class ParseTime {
     final byte[] buf = str.getBuffer();
     int i=str.getOffset();
     final int end = i+str.length();
-    while( i < end && buf[i] == ' ' ) i++;
+    while( i < end && buf[i] == ' ' ){ 
+    		i++;
+    	}
     if   ( i < end && buf[i] == '"' ) i++;
     if( (end-i) < 6 ) return Long.MIN_VALUE;
     int yyyy=0, MM=0, dd=0;
@@ -182,7 +193,9 @@ public abstract class ParseTime {
     } else { //POSIX 2004 & 2008 says 69-99 -> 1900s, 00-68 -> 2000s
       yyyy += (yyyy >= 69) ? 1900 : 2000;
     }
-    while( i<end && buf[i] == ' ' ) i++;
+    while( i<end && buf[i] == ' ' ){ 
+    		i++;
+    	}
     if( i<end && buf[i] == '"' ) i++;
     if( i==end )
       return new DateTime(yyyy,MM,dd,0,0,0, getTimezone()).getMillis();
@@ -198,7 +211,9 @@ public abstract class ParseTime {
     final byte[] buf = str.getBuffer();
     int i=str.getOffset();
     final int end = i+str.length();
-    while( i < end && buf[i] == ' ' ) i++;
+    while( i < end && buf[i] == ' ' ){
+    		i++;
+    	}
     if   ( i < end && buf[i] == '"' ) i++;
     if( (end-i) < 6 ) return Long.MIN_VALUE;
     int yyyy=0, MM=0;
@@ -214,7 +229,9 @@ public abstract class ParseTime {
     if( MM == -1 ) return Long.MIN_VALUE; // No matching month
     i += (MM>>4);               // Skip parsed month bytes
     MM &= 0xF;                  // 1-based month in low nybble
-    while( i < end && buf[i] == ' ' ) i++;
+    while( i < end && buf[i] == ' ' ){
+    		i++;
+    	}
     if( i==end ) return new DateTime(yyyy,MM,1,0,0,0, getTimezone()).getMillis();
     return Long.MIN_VALUE;      // Something odd
   }
@@ -224,7 +241,9 @@ public abstract class ParseTime {
     final byte[] buf = str.getBuffer();
     int i=str.getOffset();
     final int end = i+str.length();
-    while( i < end && buf[i] == ' ' ) i++;
+    while( i < end && buf[i] == ' ' ){
+    		i++;
+    	}
     if   ( i < end && buf[i] == '"' ) i++;
     if( end-i < 5 ) return Long.MIN_VALUE;
     long t1 = parseTime(buf,i,end,1970,1,1,true); // Unix Epoch dates
@@ -305,7 +324,9 @@ public abstract class ParseTime {
       if( i<end ) SSS = digit(SSS,buf[i++]);
       if( i<end ) SSS = digit(SSS,buf[i++]);
       if( SSS < 0 || SSS > 999 ) return Long.MIN_VALUE;
-      while( i<end && isDigit(buf[i]) ) i++; // skip micros and nanos
+      while( i<end && isDigit(buf[i]) ){
+    	  	i++; // skip micros and nanos
+      	}
     }
     if( i<end && buf[i] == '"' ) i++;
     if( i == end) {
