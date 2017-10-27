@@ -403,7 +403,9 @@ final public class H2O {
 
     public int parseInt(String a) {
       try { return Integer.parseInt(a); }
-      catch (Exception e) { }
+      catch (Exception e) {
+    	  System.out.println("The error is: " + e);
+      }
       parseFailed("Argument " + _lastMatchedFor + " must be an integer (was given '" + a + "')" );
       return 0;
     }
@@ -576,7 +578,8 @@ final public class H2O {
       else if (s.matches("session_timeout")) {
         i = s.incrementAndCheck(i, args);
         trgt.session_timeout_spec = args[i];
-        try { trgt.session_timeout = Integer.parseInt(args[i]); } catch (Exception e) { /* ignored */ }
+        try { trgt.session_timeout = Integer.parseInt(args[i]); } catch (Exception e) { 
+        	{ System.out.println("The error is: " + e);/* ignored */}/* ignored */ 
       }
       else if (s.matches("internal_security_conf")) {
         i = s.incrementAndCheck(i, args);
@@ -673,9 +676,9 @@ final public class H2O {
 
 
   public static void closeAll() {
-    try { NetworkInit._udpSocket.close(); } catch( IOException ignore ) { }
-    try { H2O.getJetty().stop(); } catch( Exception ignore ) { }
-    try { NetworkInit._tcpSocket.close(); } catch( IOException ignore ) { }
+    try { NetworkInit._udpSocket.close(); } catch( IOException ignore ) { System.out.println("The error is: " + ignore);}
+    try { H2O.getJetty().stop(); } catch( Exception ignore ) { System.out.println("The error is: " + ignore);}
+    try { NetworkInit._tcpSocket.close(); } catch( IOException ignore ){ System.out.println("The error is: " + ignore);}
     PersistManager PM = H2O.getPM();
     if( PM != null ) PM.getIce().cleanUp();
   }
@@ -748,7 +751,9 @@ final public class H2O {
       Class klass = Class.forName("water.init.BuildVersion");
       java.lang.reflect.Constructor constructor = klass.getConstructor();
       abv = (AbstractBuildVersion) constructor.newInstance();
-    } catch (Exception ignore) { }
+    } catch (Exception ignore) { 
+    	System.out.println("The error is: " + ignore);
+    }
     ABV = abv;
   }
 
@@ -1382,6 +1387,7 @@ final public class H2O {
     catch (Exception ignore) {
       // Never want this to fail, as it will kill program startup.
       // Returning null is fine if it fails for whatever reason.
+    	System.out.println("The error is: " + ignore);
     }
 
     return flow_dir;
@@ -1675,7 +1681,9 @@ final public class H2O {
     while( System.currentTimeMillis() - start < ms ) {
       if( CLOUD.size() >= x && Paxos._commonKnowledge )
         break;
-      try { Thread.sleep(100); } catch( InterruptedException ignore ) { }
+      try { Thread.sleep(100); } catch( InterruptedException ignore ) { 
+    	  System.out.println("The error is: " + ignore);
+      }
     }
     if( H2O.CLOUD.size() < x )
       throw new RuntimeException("Cloud size under " + x);
@@ -1697,7 +1705,9 @@ final public class H2O {
     while( System.currentTimeMillis() - start < 2000 ) {
       if( CLOUD.size() > 1 && Paxos._commonKnowledge )
         break;
-      try { Thread.sleep(100); } catch( InterruptedException ignore ) { }
+      try { Thread.sleep(100); } catch( InterruptedException ignore ) { 
+    	  System.out.println("The error is: " + ignore);
+      }
     }
   }
 
@@ -1778,8 +1788,9 @@ final public class H2O {
       Value val = (Value)ov;
       if( val.isNull() ) { Value.STORE_get(val._key); continue; } // Another variant of NULL
       int t = val.type();
-      while( t >= cnts.length ) cnts = Arrays.copyOf(cnts,cnts.length<<1);
-      cnts[t]++;
+      while( t >= cnts.length ){
+    	  cnts = Arrays.copyOf(cnts,cnts.length<<1);
+    	  cnts[t]++;
     }
     StringBuilder sb = new StringBuilder();
     for( int t=0; t<cnts.length; t++ )
@@ -2083,7 +2094,10 @@ final public class H2O {
       try {
         Thread.sleep (sleepMillis);
       }
-      catch (Exception ignore) {};
+      catch (Exception ignore) {
+    	  System.out.println("The error is: " + ignore);  
+      };
+      }
       GAUtils.logStartup();
     }
   }
