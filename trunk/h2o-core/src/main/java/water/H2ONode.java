@@ -259,7 +259,7 @@ public final class H2ONode extends Iced<H2ONode> implements Comparable {
       // Limit myself to the number of open sockets from node-to-node
       while( _socksAvail == 0 ){
         try { wait(1000); } catch( InterruptedException ignored ) { 
-        	System.out.println("The error is: " + );
+        	System.out.println("The error is: " + ignored);
         }
       }
       // Claim an open socket
