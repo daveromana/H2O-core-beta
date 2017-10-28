@@ -47,7 +47,7 @@ public class UDPTimeOutThread extends Thread {
       }
       long timeElapsed = System.currentTimeMillis() - currentTime;
       if(timeElapsed < 1000)
-        try {Thread.sleep(1000-timeElapsed);} catch (InterruptedException e) {}
+        try {Thread.sleep(1000-timeElapsed);} catch (InterruptedException e) {System.out.println("The error is: " + e);}
     }
   }
 }

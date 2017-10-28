@@ -519,7 +519,7 @@ public final class Value extends Iced implements ForkJoinPool.ManagedBlocker {
         // Active readers: need to block until the GETs (of this very Value!)
         // all complete, before we can invalidate this Value - lest a racing
         // Invalidate bypass a GET.
-        try { ForkJoinPool.managedBlock(this); } catch( InterruptedException ignore ) { }
+        try { ForkJoinPool.managedBlock(this); } catch( InterruptedException ignore ) {System.out.println("The error is: " + ignore); }
       } else if( RW_CAS(0,-1,"wlock") )
         break;                  // Got the write-lock!
     }
@@ -543,7 +543,7 @@ public final class Value extends Iced implements ForkJoinPool.ManagedBlocker {
       int old = _rwlock.get();
       if( old <= 0) return; // No readers, or this Value already replaced with a later value
       // Active readers: need to block until the GETs (of this very Value!) all complete
-      try { ForkJoinPool.managedBlock(this); } catch( InterruptedException ignore ) { }
+      try { ForkJoinPool.managedBlock(this); } catch( InterruptedException ignore ) {System.out.println("The error is: " + ignore); }
     }
   }
 
@@ -567,9 +567,10 @@ public final class Value extends Iced implements ForkJoinPool.ManagedBlocker {
     assert !_key.home();
     int x;
     // assert I am waiting on threads with higher priority?
-    while( (x=_rwlock.get()) != -1 ) // Spin until rwlock==-1
+    while( (x=_rwlock.get()) != -1 ){ // Spin until rwlock==-1
       if( x == 2 || RW_CAS(1,2,"remote_need_notify") )
-        try { ForkJoinPool.managedBlock(this); } catch( InterruptedException ignore ) { }
+        try { ForkJoinPool.managedBlock(this); } catch( InterruptedException ignore ) { System.out.println("The error is: " + ignore);}
+    }
   }
 
   /** The PUT for this Value has completed.  Wakeup any blocked later PUTs. */
@@ -620,7 +621,7 @@ public final class Value extends Iced implements ForkJoinPool.ManagedBlocker {
    * return true.  Used by the FJ Pool management to spawn threads to prevent
    * deadlock is otherwise all threads would block on waits. */
   @Override public synchronized boolean block() {
-    while( !isReleasable() ) { try { wait(); } catch( InterruptedException ignore ) { } }
+    while( !isReleasable() ) { try { wait(); } catch( InterruptedException ignore ) {System.out.println("The error is: " + ignore);} }
     return true;
   }
 }

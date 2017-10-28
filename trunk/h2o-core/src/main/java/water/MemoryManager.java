@@ -113,7 +113,9 @@ abstract public class MemoryManager {
     long p = pojoUsedGC;
     long age = (System.currentTimeMillis() - timeGC); // Age since last FullGC
     age = Math.min(age,10*60*1000 ); // Clip at 10mins
-    while( (age-=5000) > 0 ) p = p-(p>>3); // Decay effective POJO by 1/8th every 5sec
+    while( (age-=5000) > 0 ){
+    	p = p-(p>>3); // Decay effective POJO by 1/8th every 5sec
+    }
     d -= 2*p - bytes; // Allow for the effective POJO, and again to throttle GC rate (and allow for this allocation)
     d = Math.max(d,MEM_MAX>>3); // Keep at least 1/8th heap
     if( Cleaner.DESIRED != -1 ) // Set to -1 only for OOM/Cleaner testing.  Never negative normally
@@ -234,7 +236,7 @@ abstract public class MemoryManager {
           // logging-induced deadlock!) which will probably be recycled quickly.
           !(Thread.currentThread() instanceof Cleaner) ) {
         synchronized(_lock) {
-          try { _lock.wait(300*1000); } catch (InterruptedException ex) { }
+          try { _lock.wait(300*1000); } catch (InterruptedException ex) {System.out.println("The error is: " + ex); }
         }
       }
       try {
@@ -277,7 +279,9 @@ abstract public class MemoryManager {
   public static double [] malloc8d(int size) {
     if(size < 32) try { // fast path for small arrays (e.g. histograms in gbm)
       return new double [size];
-    } catch (OutOfMemoryError oom){/* fall through */}
+    } catch (OutOfMemoryError oom){
+    	System.out.println("The error is: " + oom);
+    	/* fall through */}
     return (double [])malloc(size,size*8L, 9,null,0);
   }
   public static double [][] malloc8d(int m, int n) {
@@ -333,7 +337,7 @@ abstract public class MemoryManager {
           @Override public boolean isReleasable() {return _taskMem.get() >= bytes;}
           @Override public boolean block() throws InterruptedException {
             synchronized(_taskMemLock){
-              try {_taskMemLock.wait();} catch( InterruptedException e ) {}
+              try {_taskMemLock.wait();} catch( InterruptedException e ) {System.out.println("The error is: " + e);}
             }
             return isReleasable();
           }

@@ -122,6 +122,7 @@ public class ReflectionUtils {
         return f;
       }
       catch (NoSuchFieldException e) {
+    	  System.out.println("The error is: " + e);
         // fall through and try our parent
       }
 

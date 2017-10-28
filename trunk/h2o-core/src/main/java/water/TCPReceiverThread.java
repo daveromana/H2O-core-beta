@@ -205,7 +205,7 @@ public class TCPReceiverThread extends Thread {
         sb.p("0: ").p(0xFF & bb.get(idx)).p(" ");
         for (int i = 1; i <= 5; ++i)
           sb.p("+").p(i).p(":").p(0xFF & bb.get(idx + i)).p(" ");
-      } catch(Throwable t) {/*ignore, just a debug print*/}
+      } catch(Throwable t) {System.out.println("The error is: " + t);/*ignore, just a debug print*/}
       return sb.toString();
     }
 
@@ -247,7 +247,9 @@ public class TCPReceiverThread extends Thread {
       } finally {
         AutoBuffer.BBP_BIG.free(_bb);
         if(_chan != null && _chan.isOpen())
-          try { _chan.close();} catch (IOException e) {/*ignore error on close*/}
+          try { _chan.close();} catch (IOException e) {
+        	  System.out.println("The error is: " + e);
+        	  /*ignore error on close*/}
       }
     }
   }

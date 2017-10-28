@@ -18,7 +18,7 @@ public class FileUtils {
    */
   public static void close(Closeable...closeable) {
     for(Closeable c : closeable)
-      try { if( c != null ) c.close(); } catch( IOException xe ) { }
+      try { if( c != null ) c.close(); } catch( IOException xe ) { System.out.println("The error is: " + xe);}
   }
 
   public static void copyStream(InputStream is, OutputStream os, final int buffer_size) {
@@ -32,7 +32,7 @@ public class FileUtils {
         os.write(bytes, 0, count);
       }
     }
-    catch(EofException eofe) {
+    catch(EofException eofe) {System.out.println("The error is: " + eofe);
       // no problem
     }
     catch(Exception ex) {

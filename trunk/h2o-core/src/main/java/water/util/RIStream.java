@@ -40,14 +40,14 @@ public abstract class RIStream extends InputStream {
   protected abstract InputStream open(long offset) throws IOException;
 
   public void closeQuietly(){
-    try{close();} catch(Exception e){} // ignore any errors
+    try{close();} catch(Exception e){System.out.println("The error is: " + e);} // ignore any errors
   }
   private void try2Recover(int attempt, IOException e) {
     if(attempt == _retries) Throwables.propagate(e);
     Log.warn("[H2OS3InputStream] Attempt("+attempt + ") to recover from " + e.getMessage() + "), off = " + _off);
-    try{_is.close();}catch(IOException ex){}
+    try{_is.close();}catch(IOException ex){System.out.println("The error is: " + ex);}
     _is = null;
-    if(attempt > 0) try {Thread.sleep(256 << attempt);}catch(InterruptedException ex){}
+    if(attempt > 0) try {Thread.sleep(256 << attempt);}catch(InterruptedException ex){System.out.println("The error is: " + ex);}
     open();
     return;
   }

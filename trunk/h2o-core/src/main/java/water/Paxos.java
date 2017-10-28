@@ -151,7 +151,7 @@ public abstract class Paxos {
     Log.info("Locking cloud to new members, because "+reason.toString());
     synchronized(Paxos.class) {
       while( !_commonKnowledge )
-        try { Paxos.class.wait(); } catch( InterruptedException ignore ) { }
+        try { Paxos.class.wait(); } catch( InterruptedException ignore ) { System.out.println("The error is: " + ignore);}
       _cloudLocked = true;
       // remove nodes which are not in the cluster (e.g. nodes from flat-file which are not actually used)
       if(H2O.isFlatfileEnabled()){

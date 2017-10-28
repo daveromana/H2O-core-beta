@@ -29,6 +29,7 @@ public class Futures {
     try {
       f.get();
     } catch(CancellationException ex){
+    	System.out.println("The error is: " + ex);
       // ignore cancelled tasks
     } catch(Throwable t) {
       if(_ex == null) _ex = t instanceof ExecutionException?t.getCause():t;

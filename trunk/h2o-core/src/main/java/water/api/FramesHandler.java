@@ -89,6 +89,7 @@ public class FramesHandler<I extends FramesHandler.Frames, S extends SchemaV3<I,
             if( model.adaptTestForTrain(new Frame(frame), false, false).length == 0 )
               compatible_models.add(model);
           } catch( IllegalArgumentException e ) {
+        	  System.out.println("The error is: " + e);
             // skip
           }
         }

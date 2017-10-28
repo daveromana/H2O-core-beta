@@ -139,7 +139,7 @@ public class JettyHTTPD extends AbstractHTTPD {
       startRequestLifecycle();
       while (!_acceptRequests) {
         try { Thread.sleep(100); }
-        catch (Exception ignore) {}
+        catch (Exception ignore) {System.out.println("The error is: " + ignore);}
       }
       setCommonResponseHttpHeaders(response);
     }

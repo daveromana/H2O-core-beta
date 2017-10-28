@@ -262,8 +262,9 @@ public class RequestServer extends HttpServlet {
         String line = null;
         try {
           BufferedReader reader = request.getReader();
-          while ((line = reader.readLine()) != null)
+          while ((line = reader.readLine()) != null){
             jb.append(line);
+          }
         } catch (Exception e) {
           throw new H2OIllegalArgumentException("Exception reading POST body JSON for URL: " + uri);
         }
@@ -335,7 +336,7 @@ public class RequestServer extends HttpServlet {
                 new RPC<>(n, new UDPRebooted.ShutdownTsk(H2O.SELF,n.index(), 1000, confirmations, 0)).call();
             }
             try { Thread.sleep(2000); }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {System.out.println("The error is: " + ignore);}
             int failedToShutdown = 0;
             // shutdown failed
             for(boolean b:confirmations)
@@ -871,7 +872,7 @@ public class RequestServer extends HttpServlet {
           //
 
         }
-      } catch( IOException ignore ) { }
+      } catch( IOException ignore ) {System.out.println("The error is: " + ignore); }
     }
     if (bytes == null || bytes.length == 0) // No resource found?
       return response404("Resource " + url, request_type);

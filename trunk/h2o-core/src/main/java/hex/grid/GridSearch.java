@@ -120,6 +120,7 @@ public final class GridSearch<MP extends Model.Parameters> extends Keyed<GridSea
           Model.Parameters parms = it.nextModelParameters(model);
           gridWork += (parms._nfolds > 0 ? (parms._nfolds+1/*main model*/) : 1) *parms.progressUnits();
         } catch(Throwable ex) {
+        	System.out.println("The error is: " + ex);
           //swallow invalid combinations
         }
       }

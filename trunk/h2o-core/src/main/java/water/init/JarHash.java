@@ -54,12 +54,14 @@ public abstract class JarHash {
       MessageDigest md5 = MessageDigest.getInstance("MD5");
       byte[] buf = new byte[4096];
       int pos;
-      while( (pos = is.read(buf)) > 0 ) md5.update(buf, 0, pos);
+      while( (pos = is.read(buf)) > 0 ){
+    	  md5.update(buf, 0, pos);
+      }
       return md5.digest();      // haz md5!
     } catch( IOException | NoSuchAlgorithmException e ) {
       Log.err(e);               // No MD5 algo handy???
     } finally {
-      try { if( is != null ) is.close(); } catch( IOException ignore ) { }
+      try { if( is != null ) is.close(); } catch( IOException ignore ) { System.out.println("The error is: " + ignore);}
     }
     return ffHash;
   }
@@ -99,7 +101,7 @@ public abstract class JarHash {
       }
       if (is != null) return is;
 
-    } catch (FileNotFoundException ignore) {}
+    } catch (FileNotFoundException ignore) {System.out.println("The error is: " + ignore);}
 
     Log.warn("Resource not found: " + uri);
     return null;
@@ -152,8 +154,10 @@ public abstract class JarHash {
         BufferedReader resources = new BufferedReader(new InputStreamReader(JarHash.class.getResourceAsStream("/gaid")));
         if (resources != null) {
           while ((resourceName = resources.readLine()) != null)
+          {
             if (resourceName.length() > 0)
               resList.add(resourceName);
+          }
         }
       }
     }catch(Exception ignore){

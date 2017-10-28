@@ -203,7 +203,7 @@ public class HostnameGuesser {
       return null;
     } finally {
       Log.warn(m);
-      if( s != null ) try { s.close(); } catch( java.io.IOException ie ) { }
+      if( s != null ) try { s.close(); } catch( java.io.IOException ie ) { System.out.println("The error is: " + ie);}
     }
   }
 

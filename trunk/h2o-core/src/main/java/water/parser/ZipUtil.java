@@ -218,7 +218,7 @@ abstract class ZipUtil {
     } catch( IOException ioe ) { 
       throw Log.throwErr(ioe); 
     } finally { 
-      try { if( is != null ) is.close(); } catch( IOException ignore ) { }
+      try { if( is != null ) is.close(); } catch( IOException ignore ) {System.out.println("The error is: " + ignore); }
     }
 
     return bs;

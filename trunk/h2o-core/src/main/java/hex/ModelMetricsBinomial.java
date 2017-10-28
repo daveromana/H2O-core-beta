@@ -190,7 +190,7 @@ public class ModelMetricsBinomial extends ModelMetricsSupervised {
             try {
               gl = new GainsLift(preds.lastVec(), resp, weight);
               gl.exec(m != null ? m._output._job : null);
-            } catch(Throwable t) {}
+            } catch(Throwable t) {System.out.println("The error is: " + t);}
           }
         }
       }

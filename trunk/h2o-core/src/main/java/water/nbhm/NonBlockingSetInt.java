@@ -49,6 +49,7 @@ public class NonBlockingSetInt extends AbstractSet<Integer> implements Serializa
     try {
       f = NonBlockingSetInt.class.getDeclaredField("_nbsi");
     } catch( java.lang.NoSuchFieldException e ) {
+    	System.out.println("The error is: " + e);
     }
     _nbsi_offset = _unsafe.objectFieldOffset(f);
   }
@@ -134,7 +135,7 @@ public class NonBlockingSetInt extends AbstractSet<Integer> implements Serializa
   public void    clear   (             ) {
     NBSI cleared = new NBSI(63, new ConcurrentAutoTable(), this); // An empty initial NBSI
     while( !CAS_nbsi( _nbsi, cleared ) ) // Spin until clear works
-      ;
+      {};
   }
 
   /** Verbose printout of internal structure for debugging. */
@@ -231,6 +232,7 @@ public class NonBlockingSetInt extends AbstractSet<Integer> implements Serializa
       try {
         f = NBSI.class.getDeclaredField("_new");
       } catch( java.lang.NoSuchFieldException e ) {
+    	  System.out.println("The error is: " + e);
       }
       _new_offset = _unsafe.objectFieldOffset(f);
     }

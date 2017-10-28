@@ -90,7 +90,9 @@ public class AstMoment extends AstBuiltin<AstMoment> {
         try {
           val = ISOChronology.getInstanceUTC().getDateTimeMillis(timeparts[0], timeparts[1], timeparts[2],
               timeparts[3], timeparts[4], timeparts[5], timeparts[6]);
-        } catch (IllegalFieldValueException ignored) {}
+        } catch (IllegalFieldValueException ignored) {
+        	System.out.println("The error is: " + ignore);
+        }
       }
       return make1x1Frame(val);
     }

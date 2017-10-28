@@ -189,7 +189,7 @@ public class ConcurrentAutoTable implements Serializable {
         // table is ready, or after the timeout in any case.  Annoyingly, this
         // breaks the non-blocking property - so for now we just briefly sleep.
         //synchronized( this ) { wait(8*megs); }         // Timeout - we always wakeup
-        try { Thread.sleep(r>>17); } catch( InterruptedException e ) { }
+        try { Thread.sleep(r>>17); } catch( InterruptedException e ) { System.out.println("The error is: " + e);}
         if( master._cat != this ) return old;
       }
 

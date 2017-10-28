@@ -104,8 +104,9 @@ public class NetworkInit {
         }
         Log.trace("Cannot allocate API port " + H2O.API_PORT + " because of following exception: ", e);
         if( apiSocket != null ) try { apiSocket.close(); } catch( IOException ohwell ) { Log.err(ohwell); }
-        if( _udpSocket != null ) try { _udpSocket.close(); } catch( IOException ie ) { }
-        if( _tcpSocket != null ) try { _tcpSocket.close(); } catch( IOException ie ) { }
+        if( _udpSocket != null ) try { _udpSocket.close(); } catch( IOException ie ) {System.out.println("The error is: " + ie); }
+        if( _tcpSocket != null ) try { _tcpSocket.close(); } catch( IOException ie ) {System.out.println("The error is: " + ie);
+        }
         apiSocket = null;
         _udpSocket = null;
         _tcpSocket = null;
@@ -202,7 +203,9 @@ public class NetworkInit {
   // disabled).
   public static void multicast( ByteBuffer bb , byte priority) {
     try { multicast2(bb, priority); }
-    catch (Exception ie) {}
+    catch (Exception ie) {
+    	System.out.println("The error is: " + ie);
+    }
   }
 
   static private void multicast2( ByteBuffer bb, byte priority ) {
@@ -376,7 +379,9 @@ public class NetworkInit {
       }
     } catch( Exception e ) { H2O.die(e.toString()); }
     finally { 
-      if( br != null ) try { br.close(); } catch( IOException ie ) { }
+      if( br != null ) try { br.close(); } catch( IOException ie ) { 
+    	  System.out.println("The error is: " + ie);
+      }
     }
     return list;
   }
