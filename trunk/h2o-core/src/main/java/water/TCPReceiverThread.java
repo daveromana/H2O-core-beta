@@ -62,7 +62,9 @@ public class TCPReceiverThread extends Thread {
           final ServerSocketChannel tmp2 = errsock; errsock = null;
           tmp2.close();       // Could throw, but errsock cleared for next pass
         }
-        if( saw_error ) Thread.sleep(100); // prevent deny-of-service endless socket-creates
+        if( saw_error ) {
+        	Thread.sleep(100); // prevent deny-of-service endless socket-creates
+        }
         saw_error = false;
 
         // ---
@@ -166,7 +168,9 @@ public class TCPReceiverThread extends Thread {
         }
         // Reuse open sockets for the next task
         try {
-          if( !_sock.isOpen() ) break;
+          if( !_sock.isOpen() ) {
+        	  break;
+          }
           _ab = new AutoBuffer(_sock, address);
         } catch( Exception e ) {
           // Exceptions here are *normal*, this is an idle TCP connection and
@@ -215,7 +219,9 @@ public class TCPReceiverThread extends Thread {
         _bb.compact();            // move data down to 0, set position to remaining bytes
         while(_bb.position() < n) {
           int res = _chan.read(_bb); // Slide position forward (up to limit)
-          if (res <= 0) throw new IOException("Didn't read any data: res=" + res);         // no eof & progress made
+          if (res <= 0) {
+        	  throw new IOException("Didn't read any data: res=" + res);         // no eof & progress made
+          }
           _h2o._last_heard_from = System.currentTimeMillis();
         }
         _bb.flip();             // Limit to amount of data, position to 0
@@ -246,10 +252,11 @@ public class TCPReceiverThread extends Thread {
         }
       } finally {
         AutoBuffer.BBP_BIG.free(_bb);
-        if(_chan != null && _chan.isOpen())
+        if(_chan != null && _chan.isOpen()) {
           try { _chan.close();} catch (IOException e) {
         	  System.out.println("The error is: " + e);
         	  /*ignore error on close*/}
+          }
       }
     }
   }
