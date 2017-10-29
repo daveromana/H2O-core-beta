@@ -53,7 +53,9 @@ public abstract class RIStream extends InputStream {
   }
 
   private void updateOffset(int off) {
-    if(_knownSize)assert (off + _off) <= _expectedSz;
+    if(_knownSize) {
+    	assert (off + _off) <= _expectedSz;
+    }
     _off += off;
   }
 
@@ -67,8 +69,9 @@ public abstract class RIStream extends InputStream {
   public void reset(){throw new UnsupportedOperationException();}
 
   private void checkEof() throws IOException {
-    if(_knownSize && _off < _expectedSz)
+    if(_knownSize && _off < _expectedSz) {
       throw new IOException("premature end of file reported, expected " + _expectedSz + " bytes, but got eof after " + _off + " bytes");
+      }
   }
   @Override
   public final int available() throws IOException {
@@ -90,10 +93,14 @@ public abstract class RIStream extends InputStream {
     while(true){
       try{
         int res = _is.read();
-        if(res == -1) checkEof();
+        if(res == -1) {
+        	checkEof();
+        }
         if(res != -1){
           updateOffset(1);
-          if(_pmon != null)_pmon.update(1);
+          if(_pmon != null) {
+        	  _pmon.update(1);
+          }
         }
         return res;
       }catch (IOException e){
@@ -108,10 +115,14 @@ public abstract class RIStream extends InputStream {
     while(true){
       try {
         int res =  _is.read(b);
-        if(res == -1) checkEof();
+        if(res == -1) {
+        	checkEof();
+        }
         if(res > 0){
           updateOffset(res);
-          if(_pmon != null)_pmon.update(res);
+          if(_pmon != null) {
+        	  _pmon.update(res);
+          }
         }
         return res;
       } catch(IOException e) {
@@ -126,10 +137,14 @@ public abstract class RIStream extends InputStream {
     while(true){
       try {
         int res = _is.read(b,off,len);
-        if(res == -1) checkEof();
+        if(res == -1) {
+        	checkEof();
+        }
         if(res > 0){
           updateOffset(res);
-          if(_pmon != null)_pmon.update(res);
+          if(_pmon != null) {
+        	  _pmon.update(res);
+          }
         }
         return res;
       } catch(IOException e) {
@@ -154,7 +169,9 @@ public abstract class RIStream extends InputStream {
         long res = _is.skip(n);
         if(res > 0){
           updateOffset((int)res);
-          if(_pmon != null)_pmon.update(res);
+          if(_pmon != null) {
+        	  _pmon.update(res);
+          }
         }
         return res;
       } catch (IOException e) {

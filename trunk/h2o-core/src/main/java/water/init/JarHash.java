@@ -30,13 +30,18 @@ public abstract class JarHash {
   private static String cl_init_jarpath() {
     try {
       final String ownJar = JarHash.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-      if( ownJar.endsWith(".jar") ) // Path if run from a Jar
+      if( ownJar.endsWith(".jar") ) { // Path if run from a Jar
         return URLDecoder.decode(ownJar, "UTF-8");
-      if( !ownJar.endsWith(".jar/") ) return null; // Not a Jar?
+        }
+      if( !ownJar.endsWith(".jar/") ) {
+    	  return null; // Not a Jar?
+      }
       // Some hadoop versions (like Hortonworks) will unpack the jar file on their own.
       String stem = "h2o.jar";
       File f = new File(ownJar + stem);
-      if( !f.exists() ) return null; // Still not a jar
+      if( !f.exists() ) {
+    	  return null; // Still not a jar
+      }
       return URLDecoder.decode(ownJar + stem, "UTF-8");
     } catch( IOException ie ) {
       return null;
@@ -46,7 +51,9 @@ public abstract class JarHash {
   private static byte[] cl_init_md5(String jarpath) {
     byte[] ffHash = new byte[16];
     Arrays.fill(ffHash, (byte)0xFF); // The default non-MD5
-    if( jarpath==null ) return ffHash;
+    if( jarpath==null ) {
+    	return ffHash;
+    }
     // Ok, pop Jar open & make MD5
     InputStream is = null;
     try {
@@ -86,8 +93,9 @@ public abstract class JarHash {
       // Try all registered locations
       for( File f : RESOURCE_FILES ) {
         File f2 = new File(f,uri);
-        if( f2.exists() )
+        if( f2.exists() ) {
           return new FileInputStream(f2);
+          }
       }
 
       // Fall through to jar file mode.
@@ -99,7 +107,9 @@ public abstract class JarHash {
       if (is == null && (cl=JarHash.class.getClassLoader())!=null) {
         is = loadResource(uri, cl);
       }
-      if (is != null) return is;
+      if (is != null) {
+    	  return is;
+      }
 
     } catch (FileNotFoundException ignore) {System.out.println("The error is: " + ignore);}
 
@@ -110,9 +120,13 @@ public abstract class JarHash {
   private static InputStream loadResource(String uri, ClassLoader cl) {
     Log.info("Trying to load resource " + uri + " via classloader " + cl,false);
     InputStream is = cl.getResourceAsStream("resources/www" + uri);
-    if( is != null ) return is;
+    if( is != null ) {
+    	return is;
+    }
     is = cl.getResourceAsStream("resources/main/www" + uri);
-    if( is != null ) return is;
+    if( is != null ) {
+    	return is;
+    }
     // This is the right file location of resource inside jar bundled by gradle
     is = cl.getResourceAsStream("www" + uri);
     return is;
@@ -144,9 +158,12 @@ public abstract class JarHash {
           if (fName.startsWith(path + "/")) {
             String resourceName = fName.substring((path + "/").length());
             int checkSubdir = resourceName.indexOf("/");
-            if (checkSubdir >= 0) // subdir, trim to subdir name
+            if (checkSubdir >= 0) { // subdir, trim to subdir name
               resourceName = resourceName.substring(0, checkSubdir);
-            if (resourceName.length() > 0) resList.add(resourceName);
+              }
+            if (resourceName.length() > 0) {
+            	resList.add(resourceName);
+            }
           }
         }
       } else { // not a jar, retrieve resource from file system
@@ -155,8 +172,9 @@ public abstract class JarHash {
         if (resources != null) {
           while ((resourceName = resources.readLine()) != null)
           {
-            if (resourceName.length() > 0)
+            if (resourceName.length() > 0) {
               resList.add(resourceName);
+              }
           }
         }
       }
