@@ -30,7 +30,9 @@ public class UDPRebooted extends UDP {
   }
 
   static void checkForSuicide(int first_byte, AutoBuffer ab) {
-    if( first_byte != UDP.udp.rebooted.ordinal() ) return;
+    if( first_byte != UDP.udp.rebooted.ordinal() ) {
+    	return;
+    }
     int type = ab.get1();
     suicide( T.values()[type], ab._h2o);
   }
@@ -101,8 +103,9 @@ public class UDPRebooted extends UDP {
 
   @Override AutoBuffer call(AutoBuffer ab) {
     checkForSuicide(udp.rebooted.ordinal(),ab);
-    if( ab._h2o != null )
+    if( ab._h2o != null ) {
       ab._h2o.rebooted();
+      }
     return ab;
   }
 
